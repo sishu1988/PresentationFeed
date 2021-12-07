@@ -11,6 +11,6 @@ jobs:
       - name: Test
         uses: actions/checkout@v1
       - name: Build and Test
-        run:  xcodebuild test -project PresentationFeed.xcodeproj -scheme CI -destination 'platform=macOS' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOONLY_ACTIVE_ARCH=NO
+        run:  xcodebuild test -project PresentationFeed.xcodeproj -scheme CI -destination 'platform=macOS,arch=x86_64' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOONLY_ACTIVE_ARCH=NO
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1.2.1
