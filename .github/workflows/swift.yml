@@ -1,0 +1,14 @@
+on:
+  push:
+   branches: [ main ]
+  pull_request:
+   branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+      - name: Test
+        uses: actions/checkout@v1
+      - name: Build and Test
+        run:  xcodebuild test -project PresentationFeed.xcodeproj -scheme CI -destination 'platform=iOS Simulator,name=iPhone 13,OS=15.0' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NOONLY_ACTIVE_ARCH=NO
