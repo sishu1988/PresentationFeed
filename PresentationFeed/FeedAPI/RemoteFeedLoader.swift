@@ -61,8 +61,8 @@ struct RemoteFeedItem : Codable {
         case id, description, location, imageURL = "image"
     }
     
-    var item: FeedItem {
-       FeedItem(id: id, description: description, location: location, imageURL: imageURL)
+    var item: FeedImage {
+        FeedImage(id: id, description: description, location: location, imageURL: imageURL)
     }
 }
 
@@ -85,7 +85,7 @@ class FeedItemMapper {
 }
 
 private extension Array where Element == RemoteFeedItem {
-    func toModels()-> [FeedItem] {
-        return map { FeedItem(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL) }
+    func toModels()-> [FeedImage] {
+        return map { FeedImage(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL) }
     }
 }

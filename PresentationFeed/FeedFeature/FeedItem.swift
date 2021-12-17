@@ -7,11 +7,11 @@
 
 import Foundation
 
-public struct FeedItem: Equatable {
+public struct FeedImage: Equatable {
     public let id: UUID
     public let description: String?
     public let location: String?
-    public let imageURL: URL
+    public let url: URL
     
     public init(id: UUID,
                 description: String?,
@@ -21,12 +21,12 @@ public struct FeedItem: Equatable {
         self.id = id
         self.description = description
         self.location = location
-        self.imageURL = imageURL
+        self.url = imageURL
     }
 }
 
 public enum LoadFeedResult {
-    case success([FeedItem])
+    case success([FeedImage])
     case failure(Error)
 }
 
