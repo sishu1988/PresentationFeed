@@ -8,7 +8,7 @@
 import Foundation
 
 class RemoteFeedLoader: FeedLoader {
-  
+    
     private let client: HTTPClient
     private let url : URL
     
@@ -17,10 +17,10 @@ class RemoteFeedLoader: FeedLoader {
         case invalidData
     }
     
-//    enum Result: Equatable {
-//        case success([FeedItem])
-//        case failure(Error)
-//    }
+    //    enum Result: Equatable {
+    //        case success([FeedItem])
+    //        case failure(Error)
+    //    }
     
     typealias Result = LoadFeedResult
     
@@ -31,29 +31,27 @@ class RemoteFeedLoader: FeedLoader {
     
     func loadFeed(completion: @escaping (Result) -> Void) {
         client.get(from: url) { [weak self] result in
-            guard let self = self else { return }
+            guard self != nil else { return }
             switch result {
             case .success( let data, let response):
-                return completion(self.map(data, from: response))
+                do {
+                    let items =  try FeedItemMapper.map(data, from: response)
+                    completion(.success(items.toModels()))
+                } catch {
+                    completion(.failure(error))
+                }
             case .failure:
                 completion(.failure(RemoteFeedLoader.Error.connectivity))
             }
         }
     }
-    
-    private func map(_ data : Data, from response: HTTPURLResponse) -> Result {
-        guard let root = try? JSONDecoder().decode(Root.self, from: data), response.statusCode == 200 else {
-            return  .failure(RemoteFeedLoader.Error.invalidData)
-        }
-        return .success(root.items.map { $0.item })
-    }
 }
 
 struct Root: Decodable {
-    let items: [Item]
+    let items: [RemoteFeedItem]
 }
 
-struct Item : Codable {
+struct RemoteFeedItem : Codable {
     let id: UUID
     let description: String?
     let location: String?
@@ -64,6 +62,30 @@ struct Item : Codable {
     }
     
     var item: FeedItem {
-        FeedItem(id: id, description: description, location: location, imageURL: imageURL)
+       FeedItem(id: id, description: description, location: location, imageURL: imageURL)
+    }
+}
+
+class FeedItemMapper {
+    struct Root: Decodable {
+        let items: [RemoteFeedItem]
+    }
+    
+    private static var OK_200: Int {
+        200
+    }
+    
+    static func map(_ data: Data, from response: HTTPURLResponse) throws -> [RemoteFeedItem] {
+        guard response.statusCode == OK_200, let root = try? JSONDecoder().decode(Root.self, from: data) else {
+            throw RemoteFeedLoader.Error.invalidData
+        }
+        
+        return root.items
+    }
+}
+
+private extension Array where Element == RemoteFeedItem {
+    func toModels()-> [FeedItem] {
+        return map { FeedItem(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL) }
     }
 }

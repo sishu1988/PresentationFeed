@@ -16,13 +16,13 @@ class FeedStoreSpy: FeedStore {
     var deleteCompletions : [DeleteCompletion] = []
     var insertCompletions : [InsertionCompletion] = []
 
-    var insertions: [(items: [FeedItem], timeStamp: Date)] = []
+    var insertions: [(items: [LocalFeedItem], timeStamp: Date)] = []
     
     var receivedMessages = [ReceivedMessage]()
     
     enum ReceivedMessage: Equatable {
         case deleteCachedFeed
-        case insert([FeedItem], Date)
+        case insert([LocalFeedItem], Date)
     }
     
     func deleteCacheFeed(completion: @escaping (Error?) -> Void)  {
@@ -31,7 +31,7 @@ class FeedStoreSpy: FeedStore {
         receivedMessages.append(.deleteCachedFeed)
     }
     
-    func insert(_ items : [FeedItem], timeStamp: Date, completion: @escaping InsertionCompletion) {
+    func insert(_ items : [LocalFeedItem], timeStamp: Date, completion: @escaping InsertionCompletion) {
         insertions.append((items, timeStamp))
         receivedMessages.append(.insert(items, timeStamp))
         insertCompletions.append(completion)
@@ -80,14 +80,15 @@ class CacheFeedUseCase: XCTestCase {
         let timeStamp = Date()
         let (sut, store) = makeSUT(timestamp: { timeStamp })
         let items = [uniqeItems]
+        let localFeedItems = items.map { LocalFeedItem (id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL)}
         sut.save(items) { _ in }
         store.completionDeletionSuccesfully()
         
         XCTAssertEqual(store.insertions.count, 1)
-        XCTAssertEqual(store.insertions.first?.items, items)
+        XCTAssertEqual(store.insertions.first?.items, localFeedItems)
         XCTAssertEqual(store.insertions.first?.timeStamp, timeStamp)
         
-        XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed , .insert(items, timeStamp)])
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedFeed , .insert(localFeedItems, timeStamp)])
     }
     
     func test_save_failsDeletionError() {
