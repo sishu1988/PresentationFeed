@@ -8,7 +8,7 @@
 import XCTest
 import PresentationFeed
 
-class FeedStore {
+class FeedStoreSpy: FeedStore {
     var deleteCacheFeedCallCount = 0
     typealias DeleteCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
@@ -51,27 +51,6 @@ class FeedStore {
     
     func completionInsertionSuccesfully() {
         insertCompletions[0](nil)
-    }
-}
-
-class LocalFeedLoader {
-    private let store: FeedStore
-    private let currentDate: () -> Date
-    
-    init(store: FeedStore, currentDate: @escaping () -> Date) {
-        self.store = store
-        self.currentDate = currentDate
-    }
-    
-    func save(_ items: [FeedItem], completion: @escaping (Error?) -> Void) {
-        
-        store.deleteCacheFeed { [unowned self] error in
-            if error == nil {
-                self.store.insert(items, timeStamp: currentDate(), completion: completion)
-            } else {
-                completion(error)
-            }
-        }
     }
 }
 
@@ -160,10 +139,47 @@ class CacheFeedUseCase: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
+    func test_save_doesNotDeliverDeletionErrorWhenSUThasbeendellocated() {
+        
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
+        
+        let deletionError = anyNSError()
+        var receivedError: Error?
+        
+        sut?.save([uniqeItems]) { error in
+            receivedError = error
+        }
+        sut = nil
+        store.completionDeletion(with: deletionError)
+        
+        XCTAssertNil(receivedError)
+    }
+    
+    func test_save_doesNotDeliverInsertionErrorWhenSUThasbeendellocated() {
+        
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store, currentDate: Date.init)
+        
+        let insertionError = anyNSError()
+        var receivedError: Error?
+        
+        sut?.save([uniqeItems]) { error in
+            receivedError = error
+        }
+        
+        store.completionDeletionSuccesfully()
+
+        sut = nil
+        store.completionInsertion(with: insertionError)
+        
+        XCTAssertNil(receivedError)
+    }
+    
     // MARK:- Helpers
     
-    private func makeSUT(timestamp : @escaping () -> Date = Date.init) -> (LocalFeedLoader, FeedStore) {
-        let store = FeedStore()
+    private func makeSUT(timestamp : @escaping () -> Date = Date.init) -> (LocalFeedLoader, FeedStoreSpy) {
+        let store = FeedStoreSpy()
         let sut = LocalFeedLoader(store: store, currentDate: timestamp)
         return (sut, store)
     }
