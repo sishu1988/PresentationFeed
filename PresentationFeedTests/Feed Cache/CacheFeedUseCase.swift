@@ -9,12 +9,15 @@ import XCTest
 import PresentationFeed
 
 class FeedStoreSpy: FeedStore {
+   
     var deleteCacheFeedCallCount = 0
     typealias DeleteCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
+    typealias RetrievalCompletion = (RetrievalCacheResult) -> Void
 
     var deleteCompletions : [DeleteCompletion] = []
     var insertCompletions : [InsertionCompletion] = []
+    var retrievalCompletions : [RetrievalCompletion] = []
 
     var insertions: [(items: [LocalFeedImage], timeStamp: Date)] = []
     
@@ -23,6 +26,8 @@ class FeedStoreSpy: FeedStore {
     enum ReceivedMessage: Equatable {
         case deleteCachedFeed
         case insert([LocalFeedImage], Date)
+        case retrieve
+
     }
     
     func deleteCacheFeed(completion: @escaping (Error?) -> Void)  {
@@ -51,6 +56,23 @@ class FeedStoreSpy: FeedStore {
     
     func completionInsertionSuccesfully() {
         insertCompletions[0](nil)
+    }
+    
+    func retrive(completion: @escaping (RetrievalCacheResult) -> Void) {
+        retrievalCompletions.append(completion)
+        receivedMessages.append(.retrieve)
+    }
+    
+    func completeRetrieve(with error: Error) {
+        retrievalCompletions[0](.failure(error))
+    }
+    
+    func completeRetrievalWithEmptyCache() {
+        retrievalCompletions[0](.empty)
+    }
+    
+    func complete(with feed: [LocalFeedImage], and date: Date) {
+        retrievalCompletions[0](.found(feed, date))
     }
 }
 
@@ -165,7 +187,7 @@ class CacheFeedUseCase: XCTestCase {
         let insertionError = anyNSError()
         var receivedError: Error?
         
-        sut?.save([uniqeImage]) { error in
+        sut?.save([uniqeImage ]) { error in
             receivedError = error
         }
         
@@ -176,6 +198,7 @@ class CacheFeedUseCase: XCTestCase {
         
         XCTAssertNil(receivedError)
     }
+    
     
     // MARK:- Helpers
     

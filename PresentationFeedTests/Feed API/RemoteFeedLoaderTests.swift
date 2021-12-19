@@ -39,15 +39,15 @@ class RemoteFeedLoaderTests: XCTestCase {
     func test_load_requestDataFromURL() {
         let url = URL(string: "https://a-url.com")!
         let (sut , client) = makeSUT()
-        sut.loadFeed { _  in}
+        sut.load { _  in}
         XCTAssertEqual(client.requestedURL, [url])
     }
     
     func test_loadTwice_requestFromURLTwice() {
         let url = URL(string: "https://a-url.com")!
         let (sut , client) = makeSUT()
-        sut.loadFeed { _ in}
-        sut.loadFeed { _ in}
+        sut.load { _ in}
+        sut.load { _ in}
         XCTAssertEqual(client.requestedURL, [url, url])
     }
     
@@ -100,7 +100,7 @@ class RemoteFeedLoaderTests: XCTestCase {
     private func expect(_ sut: RemoteFeedLoader, expectedResult: RemoteFeedLoader.Result, action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "wait to load")
         
-        sut.loadFeed { result in
+        sut.load { result in
             
             switch (result, expectedResult) {
             case let (.success(result), .success(expectedResult)):
@@ -122,7 +122,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         var capturedResult = [RemoteFeedLoader.Result]()
         let client = HTTPClientSpy()
         var sut: RemoteFeedLoader? = RemoteFeedLoader(client: client, url: URL(string: "https://a-url.com")!)
-        sut?.loadFeed { capturedResult.append($0)}
+        sut?.load { capturedResult.append($0)}
         sut = nil
         client.complete(with: 200)
         XCTAssertTrue(capturedResult.isEmpty)

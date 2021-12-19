@@ -7,9 +7,11 @@
 
 import Foundation
 
-public class LocalFeedLoader {
+public class LocalFeedLoader: FeedLoader {
+    
     private let store: FeedStore
     private let currentDate: () -> Date
+    public typealias LoadResult = LoadFeedResult
     
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
@@ -34,11 +36,61 @@ public class LocalFeedLoader {
             completion(error)
         }
     }
+    
+    public func load(completion: @escaping (LoadResult)-> Void ) {
+        store.retrive { [weak self ]result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .found(let feed, let timeStamp) where self.validate(timeStamp: timeStamp):
+                completion(.success(feed.toModels()))
+            case .failure(let error):
+                completion(.failure(error))
+            case .empty:
+                completion(.success([]))
+            case .found:
+                completion(.success([]))
+            }
+        }
+    }
+    
+    public func validateCache() {
+        self.store.retrive { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            
+            case let .found(_, timeStamp) where !self.validate(timeStamp: timeStamp):
+                self.store.deleteCacheFeed(completion: { _ in
+                    //
+                })
+            case .failure( _):
+                self.store.deleteCacheFeed(completion: { _ in
+                    //
+                })
+            default:
+                break
+            }
+        }
+    }
+    
+    func validate(timeStamp: Date)-> Bool {
+        let calander = Calendar(identifier: .gregorian)
+        guard let maxCacheAge = calander.date(byAdding: .day, value: 7, to: timeStamp) else {
+            return false
+        }
+        return currentDate() < maxCacheAge
+    }
 }
 
 
 private extension Array where Element == FeedImage {
     func toLocal()-> [LocalFeedImage] {
         return map { LocalFeedImage(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.url)}
+    }
+}
+
+private extension Array where Element == LocalFeedImage {
+    func toModels()-> [FeedImage] {
+        return map { FeedImage(id: $0.id, description: $0.description, location: $0.location, imageURL: $0.imageURL)}
     }
 }
