@@ -8,24 +8,18 @@
 import Foundation
 
 public class CachePolicy {
-    private let currentDate: () -> Date
     
     var maxAge: Int {
         7
     }
     
-    public init(currentDate: @escaping () -> Date) {
-        self.currentDate = currentDate
-    }
-    
-    func validate(timeStamp: Date)-> Bool {
+    func validate(timeStamp: Date, against date: Date)-> Bool {
         let calander = Calendar(identifier: .gregorian)
         guard let maxCacheAge = calander.date(byAdding: .day, value: maxAge, to: timeStamp) else {
             return false
         }
-        return currentDate() < maxCacheAge
+        return date < maxCacheAge
     }
-    
     
 }
 
@@ -39,7 +33,7 @@ public class LocalFeedLoader: FeedLoader {
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
         self.currentDate = currentDate
-        self.cachePolicy = CachePolicy(currentDate: currentDate)
+        self.cachePolicy = CachePolicy()
     }
     
     public func save(_ feed: [FeedImage], completion: @escaping (Error?) -> Void) {
@@ -66,7 +60,7 @@ public class LocalFeedLoader: FeedLoader {
             guard let self = self else { return }
             
             switch result {
-            case .found(let feed, let timeStamp) where self.cachePolicy.validate(timeStamp: timeStamp):
+            case .found(let feed, let timeStamp) where self.cachePolicy.validate(timeStamp: timeStamp, against: self.currentDate()):
                 completion(.success(feed.toModels()))
             case .failure(let error):
                 completion(.failure(error))
@@ -83,7 +77,7 @@ public class LocalFeedLoader: FeedLoader {
             guard let self = self else { return }
             switch result {
             
-            case let .found(_, timeStamp) where !self.cachePolicy.validate(timeStamp: timeStamp):
+            case let .found(_, timeStamp) where !self.cachePolicy.validate(timeStamp: timeStamp, against: self.currentDate()):
                 self.store.deleteCacheFeed(completion: { _ in
                     //
                 })
