@@ -3,4 +3,150 @@
    uuid = "FA54BACC-D5D5-478F-8E7F-14628B778AA2"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2F194C68-55A7-43EE-9409-7320F8DA5194"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PresentationFeedTests/Feed Cache/ValidateFeedCacheUseCaseTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "test_validate_deletesOnExpirationCache()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3D7088C3-E5AB-4A2F-987B-6121EF9C49C2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PresentationFeedTests/Feed Cache/ValidateFeedCacheUseCaseTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "test_validate_doesNotDeleteOnNonExpiredCache()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3D7088C3-E5AB-4A2F-987B-6121EF9C49C2 - 9967a1f8fa1d059c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PresentationFeedTests.ValidateFeedCacheUseCaseTests.test_validate_doesNotDeleteOnNonExpiredCache() -&gt; ()"
+                  moduleName = "PresentationFeedTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aloksinha/Documents/Development/Essential-Developer/PresentationFeed/PresentationFeedTests/Feed%20Cache/ValidateFeedCacheUseCaseTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "558">
+               </Location>
+               <Location
+                  uuid = "3D7088C3-E5AB-4A2F-987B-6121EF9C49C2 - 9967a1f8fa1d059c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "PresentationFeedTests.ValidateFeedCacheUseCaseTests.test_validate_doesNotDeleteOnNonExpiredCache() -&gt; ()"
+                  moduleName = "PresentationFeedTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aloksinha/Documents/Development/Essential-Developer/PresentationFeed/PresentationFeedTests/Feed%20Cache/ValidateFeedCacheUseCaseTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "561">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A83D9885-9C53-4915-92F1-FC0E4D91C7EB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PresentationFeed/FeedCache/CachePolicy.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "validate(timeStamp:against:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "73598A52-A284-4AC7-8F30-F84B2925CD77"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PresentationFeed/FeedCache/LocalFeedLoader.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "validateCache()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "73598A52-A284-4AC7-8F30-F84B2925CD77 - 4b6df7415040959b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (PresentationFeed.RetrievalCacheResult) -&gt; () in PresentationFeed.LocalFeedLoader.validateCache() -&gt; ()"
+                  moduleName = "PresentationFeed"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aloksinha/Documents/Development/Essential-Developer/PresentationFeed/PresentationFeed/FeedCache/LocalFeedLoader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "377">
+               </Location>
+               <Location
+                  uuid = "73598A52-A284-4AC7-8F30-F84B2925CD77 - 4b6df741504095f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (PresentationFeed.RetrievalCacheResult) -&gt; () in PresentationFeed.LocalFeedLoader.validateCache() -&gt; ()"
+                  moduleName = "PresentationFeed"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aloksinha/Documents/Development/Essential-Developer/PresentationFeed/PresentationFeed/FeedCache/LocalFeedLoader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "396">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D6DA32C0-7389-499C-A8FC-5B37053AA3D8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PresentationFeed/FeedCache/LocalFeedLoader.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "validateCache()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

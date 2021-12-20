@@ -34,23 +34,24 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
-    func test_validate_doesNotDeleteOnLessThanSevenDaysOldCache() {
+    func test_validate_doesNotDeleteOnNonExpiredCache() {
         let fixedCurrentDate = Date()
-        let lessThan7DaysOld = fixedCurrentDate.add(-7).addingTimeInterval(1)
+        let nonExpiredTimeStamp = fixedCurrentDate.minusFeddCacheMaxDays().adding(seconds: 1)
         
         let (sut, store) = makeSUT( timestamp: { fixedCurrentDate})
     
         let localFeed = [uniqeImage]
         
         sut.validateCache()
-        store.complete(with: localFeed.toLocal(), and: lessThan7DaysOld)
+        store.complete(with: localFeed.toLocal(), and: nonExpiredTimeStamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
     
-    func test_validate_deletesOnSevenDaysOldCache() {
+    func test_validate_deletesOnExpirationCache() {
         let fixedCurrentDate = Date()
-        let lessThan7DaysOld = fixedCurrentDate.add(-7)
+        
+        let expiredTimeStamp = fixedCurrentDate.minusFeddCacheMaxDays()
         
         let (sut, store) = makeSUT( timestamp: { fixedCurrentDate})
     
@@ -58,13 +59,13 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         
         sut.validateCache()
         
-        store.complete(with: localFeed.toLocal(), and: lessThan7DaysOld)
+        store.complete(with: localFeed.toLocal(), and: expiredTimeStamp)
         XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
     
-    func test_validate_deletesOnMoreThanSevenDaysOldCache() {
+    func test_validate_deletesOnExpiredCache() {
         let fixedCurrentDate = Date()
-        let lessThan7DaysOld = fixedCurrentDate.add(-7).addingTimeInterval(-1)
+        let expiredTimeStamp = fixedCurrentDate.minusFeddCacheMaxDays().adding(seconds: -1)
         
         let (sut, store) = makeSUT( timestamp: { fixedCurrentDate})
         
@@ -72,7 +73,7 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         
         sut.validateCache()
         
-        store.complete(with: localFeed.toLocal(), and: lessThan7DaysOld)
+        store.complete(with: localFeed.toLocal(), and: expiredTimeStamp)
         XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
     
@@ -98,11 +99,15 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
 }
 
 private extension Date {
-    func add(_ days: Int)-> Date {
+    func minusFeddCacheMaxDays()-> Date {
+        adding(-7)
+    }
+    
+    func adding(_ days: Int)-> Date {
         Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
     }
     
-    func add(_ seconds: TimeInterval)-> Date {
+    func adding(seconds: TimeInterval)-> Date {
         self + seconds
     }
 }

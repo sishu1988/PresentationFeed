@@ -7,38 +7,20 @@
 
 import Foundation
 
-public class CachePolicy {
-    
-    var maxAge: Int {
-        7
-    }
-    
-    func validate(timeStamp: Date, against date: Date)-> Bool {
-        let calander = Calendar(identifier: .gregorian)
-        guard let maxCacheAge = calander.date(byAdding: .day, value: maxAge, to: timeStamp) else {
-            return false
-        }
-        return date < maxCacheAge
-    }
-    
-}
-
 public class LocalFeedLoader: FeedLoader {
     
     private let store: FeedStore
     private let currentDate: () -> Date
     public typealias LoadResult = LoadFeedResult
-    private let cachePolicy: CachePolicy
     
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
         self.currentDate = currentDate
-        self.cachePolicy = CachePolicy()
     }
     
     public func save(_ feed: [FeedImage], completion: @escaping (Error?) -> Void) {
         
-        store.deleteCacheFeed { [weak self] error in
+        store.deleteCachedFeed { [weak self] error in
             guard let self = self else { return }
             if let deletionError = error {
                 completion(deletionError)
@@ -56,11 +38,11 @@ public class LocalFeedLoader: FeedLoader {
     }
     
     public func load(completion: @escaping (LoadResult)-> Void ) {
-        store.retrive { [weak self ]result in
+        store.retrieve { [weak self] result in
             guard let self = self else { return }
             
             switch result {
-            case .found(let feed, let timeStamp) where self.cachePolicy.validate(timeStamp: timeStamp, against: self.currentDate()):
+            case .found(let feed, let timeStamp) where CachePolicy.validate(timeStamp: timeStamp, against: self.currentDate()):
                 completion(.success(feed.toModels()))
             case .failure(let error):
                 completion(.failure(error))
@@ -73,16 +55,20 @@ public class LocalFeedLoader: FeedLoader {
     }
     
     public func validateCache() {
-        self.store.retrive { [weak self] result in
+
+        self.store.retrieve { [weak self] result in
+           
+            print("date is \(self!.currentDate())")
+
             guard let self = self else { return }
-            switch result {
             
-            case let .found(_, timeStamp) where !self.cachePolicy.validate(timeStamp: timeStamp, against: self.currentDate()):
-                self.store.deleteCacheFeed(completion: { _ in
+            switch result {
+            case let .found(_, timeStamp) where !CachePolicy.validate(timeStamp: timeStamp, against: self.currentDate()):
+                self.store.deleteCachedFeed(completion: { _ in
                     //
                 })
             case .failure( _):
-                self.store.deleteCacheFeed(completion: { _ in
+                self.store.deleteCachedFeed(completion: { _ in
                     //
                 })
             default:

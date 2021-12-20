@@ -9,11 +9,11 @@ import XCTest
 import PresentationFeed
 
 class FeedStoreSpy: FeedStore {
-   
+  
     var deleteCacheFeedCallCount = 0
     typealias DeleteCompletion = (Error?) -> Void
     typealias InsertionCompletion = (Error?) -> Void
-    typealias RetrievalCompletion = (RetrievalCacheResult) -> Void
+    typealias RetrievalCompletion = (RetrieveCachedFeedResult) -> Void
 
     var deleteCompletions : [DeleteCompletion] = []
     var insertCompletions : [InsertionCompletion] = []
@@ -30,7 +30,7 @@ class FeedStoreSpy: FeedStore {
 
     }
     
-    func deleteCacheFeed(completion: @escaping (Error?) -> Void)  {
+    func deleteCachedFeed(completion: @escaping DeletionCompletion) {
         deleteCompletions.append(completion)
         deleteCacheFeedCallCount = 1
         receivedMessages.append(.deleteCachedFeed)
@@ -58,8 +58,8 @@ class FeedStoreSpy: FeedStore {
         insertCompletions[0](nil)
     }
     
-    func retrive(completion: @escaping (RetrievalCacheResult) -> Void) {
-        retrievalCompletions.append(completion)
+    func retrieve(completion: @escaping RetrievalCompletion) {
+       retrievalCompletions.append(completion)
         receivedMessages.append(.retrieve)
     }
     
@@ -72,7 +72,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     func complete(with feed: [LocalFeedImage], and date: Date) {
-        retrievalCompletions[0](.found(feed, date))
+        retrievalCompletions[0](.found(feed: feed, timestamp: date))
     }
 }
 
