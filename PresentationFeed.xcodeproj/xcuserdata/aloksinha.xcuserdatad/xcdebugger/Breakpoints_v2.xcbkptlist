@@ -129,6 +129,21 @@
                   endingLineNumber = "61"
                   offsetFromSymbolStart = "396">
                </Location>
+               <Location
+                  uuid = "73598A52-A284-4AC7-8F30-F84B2925CD77 - 9a7d02e294d2b8c3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (PresentationFeed.RetrieveCachedFeedResult) -&gt; () in PresentationFeed.LocalFeedLoader.validateCache() -&gt; ()"
+                  moduleName = "PresentationFeed"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/aloksinha/Documents/Development/Essential-Developer/PresentationFeed/PresentationFeed/FeedCache/LocalFeedLoader.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "396">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
@@ -145,6 +160,22 @@
             startingLineNumber = "58"
             endingLineNumber = "58"
             landmarkName = "validateCache()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D6DD6ABB-CABC-4077-8BDD-1E6C95FC1597"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PresentationFeedTests/Feed Cache/CodableFeedStoreTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "deleteCache(from:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
