@@ -54,7 +54,6 @@
 		1630891C2771434200E93966 /* CodableFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStoreTests.swift; sourceTree = "<group>"; };
 		1630891E27714F9100E93966 /* CodableFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStore.swift; sourceTree = "<group>"; };
 		16557BD0276BF986006C74CE /* CacheFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCase.swift; sourceTree = "<group>"; };
-		168E25B02776902200906EC9 /* PresentationFeediOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = PresentationFeediOS.docc; sourceTree = "<group>"; };
 		16C07579276E659E0062149D /* LoadFeedFromCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFeedFromCache.swift; sourceTree = "<group>"; };
 		16C0757B276EB0F40062149D /* ValidateFeedCacheUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateFeedCacheUseCaseTests.swift; sourceTree = "<group>"; };
 		16C0757D276FEBFA0062149D /* CachePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachePolicy.swift; sourceTree = "<group>"; };
@@ -86,7 +85,6 @@
 			children = (
 				161A9677275FFDCE00F15E90 /* PresentationFeed */,
 				161A9683275FFDCF00F15E90 /* PresentationFeedTests */,
-				168E25AE2776902200906EC9 /* PresentationFeediOS */,
 				161A9676275FFDCE00F15E90 /* Products */,
 				1699F6282777C17C00C5D35B /* Frameworks */,
 			);
@@ -168,14 +166,6 @@
 				1630891C2771434200E93966 /* CodableFeedStoreTests.swift */,
 			);
 			path = "Feed Cache";
-			sourceTree = "<group>";
-		};
-		168E25AE2776902200906EC9 /* PresentationFeediOS */ = {
-			isa = PBXGroup;
-			children = (
-				168E25B02776902200906EC9 /* PresentationFeediOS.docc */,
-			);
-			path = PresentationFeediOS;
 			sourceTree = "<group>";
 		};
 		1699F6282777C17C00C5D35B /* Frameworks */ = {
