@@ -35,5 +35,7 @@ public enum LoadFeedResult {
 //}
 
 public protocol FeedLoader {
-    func load(completion: @escaping (LoadFeedResult) -> Void)
+    typealias Result = Swift.Result<[FeedImage], Error>
+
+    func load(completion: @escaping (Result) -> Void)
 }

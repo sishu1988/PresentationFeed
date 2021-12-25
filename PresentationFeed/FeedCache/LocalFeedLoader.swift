@@ -8,10 +8,11 @@
 import Foundation
 
 public class LocalFeedLoader: FeedLoader {
+   
     
     private let store: FeedStore
     private let currentDate: () -> Date
-    public typealias LoadResult = LoadFeedResult
+    public typealias LoadResult = FeedLoader.Result
     
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
@@ -37,7 +38,7 @@ public class LocalFeedLoader: FeedLoader {
         }
     }
     
-    public func load(completion: @escaping (LoadResult)-> Void ) {
+    public func load(completion: @escaping (FeedLoader.Result)-> Void ) {
         store.retrieve { [weak self] result in
             guard let self = self else { return }
             
