@@ -6,7 +6,6 @@
 //
 
 import XCTest
-@testable import PresentationFeediOS
 
 class PresentationFeediOSTests: XCTestCase {
 
