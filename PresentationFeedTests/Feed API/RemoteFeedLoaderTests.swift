@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import PresentationFeed
+import PresentationFeed
 
 class HTTPClientSpy: HTTPClient {
     
