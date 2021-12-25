@@ -27,6 +27,7 @@
 		1699F6272777C0F600C5D35B /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1699F6262777C0F600C5D35B /* FeedViewControllerTests.swift */; };
 		1699F6292777C17C00C5D35B /* PresentationFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 161A9675275FFDCE00F15E90 /* PresentationFeed.framework */; platformFilter = ios; };
 		1699F62A2777C17C00C5D35B /* PresentationFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 161A9675275FFDCE00F15E90 /* PresentationFeed.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		168E25BD2776902200906EC9 /* PresentationFeediOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 168E25AF2776902200906EC9 /* PresentationFeediOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		16C0757A276E659E0062149D /* LoadFeedFromCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C07579276E659E0062149D /* LoadFeedFromCache.swift */; };
 		16C0757C276EB0F40062149D /* ValidateFeedCacheUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0757B276EB0F40062149D /* ValidateFeedCacheUseCaseTests.swift */; };
 		16C0757E276FEBFB0062149D /* CachePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C0757D276FEBFA0062149D /* CachePolicy.swift */; };
@@ -89,6 +90,7 @@
 		1630891E27714F9100E93966 /* CodableFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableFeedStore.swift; sourceTree = "<group>"; };
 		16557BD0276BF986006C74CE /* CacheFeedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheFeedUseCase.swift; sourceTree = "<group>"; };
 		168E25AD2776902200906EC9 /* PresentationFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PresentationFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		168E25AF2776902200906EC9 /* PresentationFeediOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PresentationFeediOS.h; sourceTree = "<group>"; };
 		168E25B02776902200906EC9 /* PresentationFeediOS.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = PresentationFeediOS.docc; sourceTree = "<group>"; };
 		168E25B62776902200906EC9 /* PresentationFeediOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PresentationFeediOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		168E25BB2776902200906EC9 /* PresentationFeediOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationFeediOSTests.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		168E25AE2776902200906EC9 /* PresentationFeediOS */ = {
 			isa = PBXGroup;
 			children = (
+				168E25AF2776902200906EC9 /* PresentationFeediOS.h */,
 				168E25B02776902200906EC9 /* PresentationFeediOS.docc */,
 			);
 			path = PresentationFeediOS;
@@ -277,6 +280,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				168E25BD2776902200906EC9 /* PresentationFeediOS.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
